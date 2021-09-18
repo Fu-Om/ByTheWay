@@ -86,38 +86,38 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-<title>By The Way: Welcome to By The Way</title>
+<title>By The Way: dplyrを使った関数</title>
 
-<meta property="description" itemprop="description" content="Welcome to our new blog, By The Way. We hope you enjoy &#10;reading what we have to say!"/>
+<meta property="description" itemprop="description" content="dplyrを関数で使うためのメモ"/>
 
 
 <!--  https://schema.org/Article -->
 <meta property="article:published" itemprop="datePublished" content="2021-09-18"/>
 <meta property="article:created" itemprop="dateCreated" content="2021-09-18"/>
-<meta name="article:author" content="Nora Jones"/>
+<meta name="article:author" content="fuuuumin"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="By The Way: Welcome to By The Way"/>
+<meta property="og:title" content="By The Way: dplyrを使った関数"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Welcome to our new blog, By The Way. We hope you enjoy &#10;reading what we have to say!"/>
+<meta property="og:description" content="dplyrを関数で使うためのメモ"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="By The Way"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="By The Way: Welcome to By The Way"/>
-<meta property="twitter:description" content="Welcome to our new blog, By The Way. We hope you enjoy &#10;reading what we have to say!"/>
+<meta property="twitter:title" content="By The Way: dplyrを使った関数"/>
+<meta property="twitter:description" content="dplyrを関数で使うためのメモ"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Welcome to By The Way"]},{"type":"character","attributes":{},"value":["Welcome to our new blog, By The Way. We hope you enjoy \nreading what we have to say!"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Nora Jones"]},{"type":"character","attributes":{},"value":["https://example.com/norajones"]},{"type":"character","attributes":{},"value":["Spacely Sprockets"]},{"type":"character","attributes":{},"value":["https://example.com/spacelysprokets"]}]}]},{"type":"character","attributes":{},"value":["09-18-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","categories","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["dplyrを使った関数"]},{"type":"character","attributes":{},"value":["R","tidyverse"]},{"type":"character","attributes":{},"value":["dplyrを関数で使うためのメモ"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["fuuuumin"]},{"type":"character","attributes":{},"value":["https://fu-om.github.io/ByTheWay/"]}]}]},{"type":"character","attributes":{},"value":["09-18-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"NULL"}
+  {"type":"character","attributes":{},"value":["dplyr_files/anchor-4.2.2/anchor.min.js","dplyr_files/bowser-1.9.3/bowser.min.js","dplyr_files/distill-2.2.21/template.v2.js","dplyr_files/header-attrs-2.7/header-attrs.js","dplyr_files/jquery-1.11.3/jquery.min.js","dplyr_files/pagedtable-1.1/css/pagedtable.css","dplyr_files/pagedtable-1.1/js/pagedtable.js","dplyr_files/popper-2.6.0/popper.min.js","dplyr_files/tippy-6.2.7/tippy-bundle.umd.min.js","dplyr_files/tippy-6.2.7/tippy-light-border.css","dplyr_files/tippy-6.2.7/tippy.css","dplyr_files/tippy-6.2.7/tippy.umd.min.js","dplyr_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2042,6 +2042,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!--/radix_placeholder_distill-->
   <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+  <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2062,7 +2064,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Welcome to By The Way","description":"Welcome to our new blog, By The Way. We hope you enjoy \nreading what we have to say!","authors":[{"author":"Nora Jones","authorURL":"https://example.com/norajones","affiliation":"Spacely Sprockets","affiliationURL":"https://example.com/spacelysprokets","orcidID":""}],"publishedDate":"2021-09-18T00:00:00.000+00:00","citationText":"Jones, 2021"}
+{"title":"dplyrを使った関数","description":"dplyrを関数で使うためのメモ","authors":[{"author":"fuuuumin","authorURL":"https://fu-om.github.io/ByTheWay/","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-09-18T00:00:00.000+00:00","citationText":"fuuuumin, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2086,20 +2088,105 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Welcome to By The Way</h1>
+<h1>dplyrを使った関数</h1>
 <!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../index.html#category:R" class="dt-tag">R</a>
+  <a href="../../index.html#category:tidyverse" class="dt-tag">tidyverse</a>
+</div>
 <!--/radix_placeholder_categories-->
-<p><p>Welcome to our new blog, By The Way. We hope you enjoy reading what we have to say!</p></p>
+<p><p>dplyrを関数で使うためのメモ</p></p>
 </div>
 
 <div class="d-byline">
-  Nora Jones <a href="https://example.com/norajones" class="uri">https://example.com/norajones</a> (Spacely Sprockets)<a href="https://example.com/spacelysprokets" class="uri">https://example.com/spacelysprokets</a>
+  fuuuumin <a href="https://fu-om.github.io/ByTheWay/" class="uri">https://fu-om.github.io/ByTheWay/</a> 
   
 <br/>09-18-2021
 </div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h1 id="dplyrを使った関数">dplyrを使った関数</h1>
+<p>探索的に使うdplyr.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>6</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>rmarkdown</span><span class='fu'>::</span><span class='fu'><a href='https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html'>paged_table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280C"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6","_rn_":"Ferrari Dino"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<p>特に問題ない.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>my_filter</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>filter_var</span>, <span class='va'>condition</span>, <span class='va'>df</span><span class='op'>=</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>df</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>filter_var</span> <span class='op'>==</span> <span class='va'>condition</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>my_filter</span><span class='op'>(</span><span class='va'>cyl</span>, <span class='fl'>6</span>, <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>rmarkdown</span><span class='fu'>::</span><span class='fu'><a href='https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html'>paged_table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<pre><code>Problem with `filter()` input `..1`.
+x object &#39;cyl&#39; not found
+ℹ Input `..1` is `filter_var == condition`.</code></pre>
+<p>どうやら、<code>filter_var</code>を参照している。<code>cyl</code>を参照してもらいたい。</p>
+<h1 id="enquoを使う方法"><code>enquo()</code>を使う方法</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>my_filter</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>filter_var</span>, <span class='va'>condition</span>, <span class='va'>df</span><span class='op'>=</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>filter_var</span> <span class='op'>&lt;-</span> <span class='fu'>enquo</span><span class='op'>(</span><span class='va'>filter_var</span><span class='op'>)</span>
+  <span class='va'>df</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>filter_var</span> <span class='op'>==</span> <span class='va'>condition</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>my_filter</span><span class='op'>(</span><span class='va'>cyl</span>, <span class='fl'>6</span>, <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>rmarkdown</span><span class='fu'>::</span><span class='fu'><a href='https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html'>paged_table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280C"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6","_rn_":"Ferrari Dino"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<p><a href="https://adv-r.hadley.nz/evaluation.html">Non Standard Evaluationの詳しい説明</a></p>
+<h1 id="簡単な方法">簡単な方法<code>{{}}</code></h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>my_filter2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>filter_var</span>, <span class='va'>condition</span>, <span class='va'>df</span><span class='op'>=</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>df</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span><span class='va'>filter_var</span><span class='op'>}</span><span class='op'>}</span> <span class='op'>==</span> <span class='va'>condition</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>my_filter2</span><span class='op'>(</span><span class='va'>cyl</span>, <span class='fl'>6</span>, <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>rmarkdown</span><span class='fu'>::</span><span class='fu'><a href='https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html'>paged_table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280C"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6","_rn_":"Ferrari Dino"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<h1 id="複数の引数のとき">複数の引数のとき</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>my_select</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span><span class='op'>=</span><span class='va'>mtcars</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>vars</span> <span class='op'>&lt;-</span> <span class='fu'>enquos</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+  <span class='va'>df</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>select</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>vars</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>my_select</span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='va'>mpg</span>, <span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>rmarkdown</span><span class='fu'>::</span><span class='fu'><a href='https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html'>paged_table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","_rn_":"Datsun 710"},{"1":"21.4","2":"6","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","_rn_":"Valiant"},{"1":"14.3","2":"8","_rn_":"Duster 360"},{"1":"24.4","2":"4","_rn_":"Merc 240D"},{"1":"22.8","2":"4","_rn_":"Merc 230"},{"1":"19.2","2":"6","_rn_":"Merc 280"},{"1":"17.8","2":"6","_rn_":"Merc 280C"},{"1":"16.4","2":"8","_rn_":"Merc 450SE"},{"1":"17.3","2":"8","_rn_":"Merc 450SL"},{"1":"15.2","2":"8","_rn_":"Merc 450SLC"},{"1":"10.4","2":"8","_rn_":"Cadillac Fleetwood"},{"1":"10.4","2":"8","_rn_":"Lincoln Continental"},{"1":"14.7","2":"8","_rn_":"Chrysler Imperial"},{"1":"32.4","2":"4","_rn_":"Fiat 128"},{"1":"30.4","2":"4","_rn_":"Honda Civic"},{"1":"33.9","2":"4","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","_rn_":"Toyota Corona"},{"1":"15.5","2":"8","_rn_":"Dodge Challenger"},{"1":"15.2","2":"8","_rn_":"AMC Javelin"},{"1":"13.3","2":"8","_rn_":"Camaro Z28"},{"1":"19.2","2":"8","_rn_":"Pontiac Firebird"},{"1":"27.3","2":"4","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","_rn_":"Lotus Europa"},{"1":"15.8","2":"8","_rn_":"Ford Pantera L"},{"1":"19.7","2":"6","_rn_":"Ferrari Dino"},{"1":"15.0","2":"8","_rn_":"Maserati Bora"},{"1":"21.4","2":"4","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
