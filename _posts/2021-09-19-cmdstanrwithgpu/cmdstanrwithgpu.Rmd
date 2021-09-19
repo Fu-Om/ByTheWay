@@ -34,7 +34,7 @@ cat /etc/lsb-release
 clinfo -l
 ```
 
-Windowsは、GPUサポートのWSL2を使いましょう。あとは、必要に応じて`nvidia-driver`など入れましょう。
+Windowsは、GPUサポートのWSL2を使う。あとは、必要に応じて`nvidia-driver`など入れる。
 
 # TL;DR CmdStanでOpenCLを使うため
 
@@ -43,6 +43,8 @@ Windowsは、GPUサポートのWSL2を使いましょう。あとは、必要に
 - `CmdStanR`を導入するときに特別なことは必要ない
 
 - `apt install nvidia-opencl-dev`が必要だった
+
+- OpenCLでコンパイルするためには、`make/local`に追記または、コンパイル時に`cpp_options = list(stan_opencl = TRUE)`を渡す
 
 # CmdStanRのインストール
 
@@ -96,8 +98,10 @@ STAN_OPENCL=true
 `examples`があるので実行してみる。
 
 ```{r}
-cmdstanr::cmdstanr_example(example = "schools", chains=2, quiet=FALSE)
+cmdstanr::cmdstanr_example(example="schools", chains=2, quiet=FALSE, refresh = 1000)
 ```
+
+`nvidia-smi`などでGPUで実行できているか確認できる。
 
 ## 感想
 

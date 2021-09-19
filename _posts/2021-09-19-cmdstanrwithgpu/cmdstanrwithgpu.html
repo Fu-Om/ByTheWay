@@ -1498,12 +1498,13 @@ DISTRIB_DESCRIPTION=&quot;Ubuntu 20.04.1 LTS&quot;</code></pre>
 <pre><code>Platform #0: NVIDIA CUDA
  `-- Device #0: NVIDIA GeForce GTX 1080 Ti</code></pre>
 </div>
-<p>Windowsは、GPUサポートのWSL2を使いましょう。あとは、必要に応じて<code>nvidia-driver</code>など入れましょう。</p>
+<p>Windowsは、GPUサポートのWSL2を使う。あとは、必要に応じて<code>nvidia-driver</code>など入れる。</p>
 <h1 id="tldr-cmdstanでopenclを使うため">TL;DR CmdStanでOpenCLを使うため</h1>
 <ul>
 <li><p><a href="http://mc-stan.org/math/opencl_support.html">公式ドキュメント</a>と<a href="https://mc-stan.org/cmdstanr/articles/opencl.html">vignettes</a></p></li>
 <li><p><code>CmdStanR</code>を導入するときに特別なことは必要ない</p></li>
 <li><p><code>apt install nvidia-opencl-dev</code>が必要だった</p></li>
+<li><p>OpenCLでコンパイルするためには、<code>make/local</code>に追記または、コンパイル時に<code>cpp_options = list(stan_opencl = TRUE)</code>を渡す</p></li>
 </ul>
 <h1 id="cmdstanrのインストール">CmdStanRのインストール</h1>
 <div class="layout-chunk" data-layout="l-body">
@@ -1552,86 +1553,51 @@ DISTRIB_DESCRIPTION=&quot;Ubuntu 20.04.1 LTS&quot;</code></pre>
 <p><code>examples</code>があるので実行してみる。</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>cmdstanr</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/cmdstanr/reference/cmdstanr_example.html'>cmdstanr_example</a></span><span class='op'>(</span>example <span class='op'>=</span> <span class='st'>"schools"</span>, chains<span class='op'>=</span><span class='fl'>2</span>, quiet<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>cmdstanr</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/cmdstanr/reference/cmdstanr_example.html'>cmdstanr_example</a></span><span class='op'>(</span>example<span class='op'>=</span><span class='st'>"schools"</span>, chains<span class='op'>=</span><span class='fl'>2</span>, quiet<span class='op'>=</span><span class='cn'>FALSE</span>, refresh <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Running MCMC with 2 sequential chains...
 
 Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 1 finished in 0.1 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 2 finished in 0.1 seconds.
 
 Both chains finished successfully.
 Mean chain execution time: 0.1 seconds.
-Total execution time: 1.1 seconds.</code></pre>
+Total execution time: 1.0 seconds.</code></pre>
 <pre><code> variable   mean median   sd  mad     q5    q95 rhat ess_bulk
- lp__     -58.92 -59.46 5.00 4.80 -66.47 -49.96 1.01       97
- mu         6.52   6.62 4.34 4.19  -0.64  13.47 1.00      378
- tau        5.81   5.18 3.54 3.38   1.39  12.25 1.01       99
- theta[1]   9.67   9.00 7.19 6.36  -0.66  23.06 1.00      508
- theta[2]   6.97   6.98 6.00 5.60  -2.96  16.71 1.01      637
- theta[3]   5.28   5.45 6.72 6.10  -5.80  15.61 1.00      599
- theta[4]   6.71   6.77 5.94 5.48  -2.85  16.62 1.00      507
- theta[5]   4.35   4.85 5.89 5.57  -6.20  13.24 1.00      497
- theta[6]   5.35   5.54 6.28 5.80  -5.01  14.98 1.01      489
- theta[7]   9.51   8.92 6.08 5.88   0.58  20.40 1.00      499
+ lp__     -56.17 -56.11 6.19 7.66 -65.93 -46.80 1.10       19
+ mu         6.90   7.08 3.90 3.76   0.17  13.41 1.09      204
+ tau        4.51   3.40 3.72 3.29   0.87  11.85 1.13       14
+ theta[1]   9.40   8.28 6.61 4.67   0.37  21.70 1.04      297
+ theta[2]   7.17   7.45 5.22 3.99  -1.98  15.70 1.05      400
+ theta[3]   6.34   6.91 6.03 4.48  -4.79  15.30 1.05      290
+ theta[4]   6.98   7.01 5.48 4.00  -1.94  15.81 1.06      434
+ theta[5]   5.47   6.29 5.30 4.23  -4.01  13.41 1.06      229
+ theta[6]   5.99   6.39 5.66 4.54  -4.20  14.40 1.06      244
+ theta[7]   9.04   8.50 5.52 4.39   0.86  19.35 1.03      282
  ess_tail
-       54
-      655
-       54
-      892
-     1113
-      972
-     1092
-     1202
-      962
-     1101
+       51
+      180
+       26
+      689
+      838
+      722
+      659
+      228
+      630
+      644
 
  # showing 10 of 11 rows (change via &#39;max_rows&#39; argument or &#39;cmdstanr_max_rows&#39; option)</code></pre>
 </div>
+<p><code>nvidia-smi</code>などでGPUで実行できているか確認できる。</p>
 <h2 id="感想">感想</h2>
 <p><a href="https://mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html">ここらへんの大きめなSEIRモデル</a>でどう振る舞うか確認したい。ところで<code>knitr</code>って<code>bash</code>を組み込めるのですね。</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
