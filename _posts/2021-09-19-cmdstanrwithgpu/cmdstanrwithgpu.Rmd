@@ -1,0 +1,104 @@
+---
+title: "CmdStanRでGPU(OpenCL)を使う"
+categories:
+  - R
+  - Stan
+  - GPU
+description: |
+  CmdStanRの導入とOpenCLのメモ
+author:
+  - name: fuuuumin
+    url: https://fu-om.github.io/ByTheWay/
+date: 09-20-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# 動機
+
+DLとか[Rapids](https://rapids.ai/)でどの誤家庭でもあるGPUは高速化のために使えるが、ベイズモデリングで簡単にGPUを利用できるものがなかった。`CmdStan 2.26.1`以降でOpenCL対応したようなので試してみた。`CmdStanR`はターミナルで扱う`CmdStan`をRで使えるようにしたラッパーになる。`rstan`パッケージよりもコンパイルが高速であるらしい。[清水先生の資料](https://www.slideshare.net/simizu706/cmdstanrreducesum)
+
+# 環境確認
+
+```{bash}
+cat /etc/lsb-release 
+```
+
+```{bash}
+clinfo -l
+```
+
+Windowsは、GPUサポートのWSL2を使いましょう。あとは、必要に応じて`nvidia-driver`など入れましょう。
+
+# TL;DR CmdStanでOpenCLを使うため
+
+- [公式ドキュメント](http://mc-stan.org/math/opencl_support.html)と[vignettes](https://mc-stan.org/cmdstanr/articles/opencl.html)
+
+- `CmdStanR`を導入するときに特別なことは必要ない
+
+- `apt install nvidia-opencl-dev`が必要だった
+
+# CmdStanRのインストール
+
+```{r, eval=FALSE}
+install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+```
+
+いつものパッケージと同様にインストールできる。次に`CmdStan`本体をインストールする。
+
+C++コンパイラなどを確認する。
+
+```{r, eval=FALSE}
+check_cmdstan_toolchain()
+```
+
+`CmdStan`本体をインストールはこれだけ。
+
+```{r, eval=FALSE}
+install_cmdstan(cores = 2)
+```
+
+インストール先は、`~/.cmdstanr/cmdstan-2.27.0/`
+
+```{bash, eval=FALSE}
+$tree -L 1  ~/.cmdstanr/cmdstan-2.27.0/ 
+~/.cmdstanr/cmdstan-2.27.0/
+├── bin
+├── examples
+├── install-tbb.bat
+├── Jenkinsfile
+├── lib
+├── LICENSE
+├── make
+├── makefile
+├── README.md
+├── runCmdStanTests.py
+├── src
+├── stan
+└── test-all.sh
+```
+
+OpenCLでコンパイルする場合は、`make/local`ファイルを編集して、以下を追記する。
+
+```
+STAN_OPENCL=true
+```
+あるいは、モデルコンパイル時に、`cpp_options = list(stan_opencl = TRUE)`を渡す。
+
+# 確認
+
+`examples`があるので実行してみる。
+
+```{r}
+cmdstanr::cmdstanr_example(example = "schools", chains=2, quiet=FALSE)
+```
+
+## 感想
+
+[ここらへんの大きめなSEIRモデル](https://mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html)でどう振る舞うか確認したい。ところで`knitr`って`bash`を組み込めるのですね。
