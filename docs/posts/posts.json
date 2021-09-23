@@ -1,5 +1,25 @@
 [
   {
+    "path": "posts/2021-09-23-readmanyfiles/",
+    "title": "多くのファイルを遅延評価で読み込み、メモリ消費を抑える",
+    "description": "quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。",
+    "author": [
+      {
+        "name": "fuuuumin",
+        "url": "https://fu-om.github.io/ByTheWay/"
+      }
+    ],
+    "date": "2021-09-23",
+    "categories": [
+      "R",
+      "tidyyverse"
+    ],
+    "contents": "\nサンプルデータ作成\nn: ファイル数, nr:行数, nc:列数\n新しくdataディレクトリを直下に掘る\n1.csv … n.csvを作成\n\n\nset.seed(2021)\nn <- 100\nnr <- 100; nc <- 10\nf = map_chr(1:n, ~str_c(\"./data/\", .x, \".csv\"))\nifelse(!dir.exists(file.path(\"./data\")), dir.create(file.path(\"./data\")), FALSE)\n\n\n[1] FALSE\n\ncreate_random_df <- function(nr, nc, path) {\n  mat <- matrix(rnorm(nr*nc), nr, nc)\n  colnames(mat) <- map_chr(1:nc, ~str_c(\"col_\", .x))\n  df <- as_tibble(mat)\n  write_csv(df, file = path)\n}\nwalk(f, ~create_random_df(nr, nc, .x))\n\n\n\n\n\nread_csv(\"data/1.csv\") %>% head() %>% knitr::kable()\n\n\ncol_1\ncol_2\ncol_3\ncol_4\ncol_5\ncol_6\ncol_7\ncol_8\ncol_9\ncol_10\n-0.1224600\n-0.2603365\n0.2701953\n1.2060572\n-0.6745562\n0.2159818\n0.1492579\n0.5683032\n0.5534009\n-0.9598381\n0.5524566\n0.4503400\n-1.3432502\n0.9941102\n0.2381266\n-1.3925378\n-0.3123636\n0.9520432\n-1.1167970\n0.8789497\n0.3486495\n-0.1428816\n-0.8488889\n1.5391577\n0.5450859\n-0.0743782\n-1.2595894\n1.2442086\n0.5740307\n0.6760329\n0.3596322\n-0.4867215\n-0.4076079\n0.2918469\n-0.4488515\n-1.1360389\n0.0519813\n0.7995387\n1.2043346\n1.0426258\n0.8980537\n-1.1957732\n-0.6661505\n0.5105483\n0.9712467\n-0.4295111\n0.2044272\n-0.2429687\n0.7274956\n0.8920711\n-1.9225695\n0.0469410\n-0.1032374\n-0.5409150\n-1.5471639\n0.4795757\n1.3869823\n-2.1849709\n-0.7023848\n1.2172707\n\ncsvファイルの名前を1列にしたtribble\n\n\nlist_csv <- list.files(path = \"data\", \n                       pattern = \".csv\", full.names = TRUE)\ndf_csv <- tribble(~paths, list_csv) %>% \n  unnest(cols = paths)\n\ndf_csv %>% head() %>% knitr::kable()\n\n\npaths\ndata/1.csv\ndata/10.csv\ndata/100.csv\ndata/11.csv\ndata/12.csv\ndata/13.csv\n\n遅延評価\nまず、dataframes列でread_csvをquosureにして評価しない。さらに、各dataframeに行う処理(今回の場合はnrow())をquosureとしている。その後、nrows列をrlang::eval_tidyで評価している。\n\n\ndf_csv <- df_csv %>% \n  mutate(dataframes=map(.x=paths, ~quo(read_csv(.x, col_types = cols())))) %>% \n  mutate(nrows=map(.x=dataframes, ~quo(nrow(rlang::eval_tidy(.x)))))\n\ndf_csv <- df_csv %>% \n  mutate(nrows_eval = map(nrows, rlang::eval_tidy)) %>% \n  unnest(nrows_eval)\ndf_csv %>% head() %>% knitr::kable()\n\n\npaths\ndataframes\nnrows\nnrows_eval\ndata/1.csv\n~read_csv(.x, col_types = cols())\n~nrow(rlang::eval_tidy(.x))\n100\ndata/10.csv\n~read_csv(.x, col_types = cols())\n~nrow(rlang::eval_tidy(.x))\n100\ndata/100.csv\n~read_csv(.x, col_types = cols())\n~nrow(rlang::eval_tidy(.x))\n100\ndata/11.csv\n~read_csv(.x, col_types = cols())\n~nrow(rlang::eval_tidy(.x))\n100\ndata/12.csv\n~read_csv(.x, col_types = cols())\n~nrow(rlang::eval_tidy(.x))\n100\ndata/13.csv\n~read_csv(.x, col_types = cols())\n~nrow(rlang::eval_tidy(.x))\n100\n\n複数の処理をしたいときは？\n実行したい関数をtribbleで返す関数をまとめておく(この場合、my_func)。そして新しいtribbleの列を作成する。\n\n\nlist_csv <- list.files(path = \"data\", \n                       pattern = \".csv\", full.names = TRUE)\ndf_csv <- tribble(~paths, list_csv) %>% \n  unnest(cols = paths)\nmy_func <- function(x) {\n  x <- rlang::eval_tidy(x)\n  tribble(~nrows, ~ncols,\n          nrow(x), ncol(x))\n}\n\ndf_csv <- df_csv %>% \n  mutate(dataframes = map(.x=paths, ~quo(read_csv(.x, col_types = cols())))) %>% \n  mutate(nrows_and_ncols = map(dataframes, my_func))\n\ndf_csv %>% head()\n\n\n# A tibble: 6 x 3\n  paths        dataframes nrows_and_ncols \n  <chr>        <list>     <list>          \n1 data/1.csv   <quosure>  <tibble [1 × 2]>\n2 data/10.csv  <quosure>  <tibble [1 × 2]>\n3 data/100.csv <quosure>  <tibble [1 × 2]>\n4 data/11.csv  <quosure>  <tibble [1 × 2]>\n5 data/12.csv  <quosure>  <tibble [1 × 2]>\n6 data/13.csv  <quosure>  <tibble [1 × 2]>\n\n最後にtribbleをunnestして分解してあげる。\n\n\ndf_csv %>% \n  unnest(cols = nrows_and_ncols) %>% \n  head() %>% knitr::kable()\n\n\npaths\ndataframes\nnrows\nncols\ndata/1.csv\n~read_csv(.x, col_types = cols())\n100\n10\ndata/10.csv\n~read_csv(.x, col_types = cols())\n100\n10\ndata/100.csv\n~read_csv(.x, col_types = cols())\n100\n10\ndata/11.csv\n~read_csv(.x, col_types = cols())\n100\n10\ndata/12.csv\n~read_csv(.x, col_types = cols())\n100\n10\ndata/13.csv\n~read_csv(.x, col_types = cols())\n100\n10\n\n参考\nブログ記事\nAdvanced R\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-09-23T19:46:19+09:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2021-09-19-cmdstanrwithgpu/",
     "title": "CmdStanRでGPU(OpenCL)を使う",
     "description": "CmdStanRの導入とOpenCLのメモ",

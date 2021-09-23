@@ -1,0 +1,108 @@
+---
+title: "多くのファイルを遅延評価で読み込み、メモリ消費を抑える" 
+categories:
+  - R
+  - tidyyverse
+description: |
+  quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。
+author:
+  - name: fuuuumin
+    url: https://fu-om.github.io/ByTheWay/
+date: 09-23-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# サンプルデータ作成
+
+- `n`: ファイル数, `nr`:行数, `nc`:列数
+- 新しく`data`ディレクトリを直下に掘る
+- 1.csv ... n.csvを作成
+
+```{r}
+set.seed(2021)
+n <- 100
+nr <- 100; nc <- 10
+f = map_chr(1:n, ~str_c("./data/", .x, ".csv"))
+ifelse(!dir.exists(file.path("./data")), dir.create(file.path("./data")), FALSE)
+
+create_random_df <- function(nr, nc, path) {
+  mat <- matrix(rnorm(nr*nc), nr, nc)
+  colnames(mat) <- map_chr(1:nc, ~str_c("col_", .x))
+  df <- as_tibble(mat)
+  write_csv(df, file = path)
+}
+walk(f, ~create_random_df(nr, nc, .x))
+```
+
+```{r}
+read_csv("data/1.csv") %>% head() %>% knitr::kable()
+```
+
+# csvファイルの名前を1列にしたtribble
+
+```{r}
+list_csv <- list.files(path = "data", 
+                       pattern = ".csv", full.names = TRUE)
+df_csv <- tribble(~paths, list_csv) %>% 
+  unnest(cols = paths)
+
+df_csv %>% head() %>% knitr::kable()
+```
+
+# 遅延評価
+
+まず、dataframes列で`read_csv`をquosureにして評価しない。さらに、各dataframeに行う処理(今回の場合は`nrow()`)をquosureとしている。その後、nrows列を`rlang::eval_tidy`で評価している。
+
+```{r}
+df_csv <- df_csv %>% 
+  mutate(dataframes=map(.x=paths, ~quo(read_csv(.x, col_types = cols())))) %>% 
+  mutate(nrows=map(.x=dataframes, ~quo(nrow(rlang::eval_tidy(.x)))))
+
+df_csv <- df_csv %>% 
+  mutate(nrows_eval = map(nrows, rlang::eval_tidy)) %>% 
+  unnest(nrows_eval)
+df_csv %>% head() %>% knitr::kable()
+```
+
+## 複数の処理をしたいときは？
+
+実行したい関数をtribbleで返す関数をまとめておく(この場合、`my_func`)。そして新しいtribbleの列を作成する。
+
+```{r}
+list_csv <- list.files(path = "data", 
+                       pattern = ".csv", full.names = TRUE)
+df_csv <- tribble(~paths, list_csv) %>% 
+  unnest(cols = paths)
+my_func <- function(x) {
+  x <- rlang::eval_tidy(x)
+  tribble(~nrows, ~ncols,
+          nrow(x), ncol(x))
+}
+
+df_csv <- df_csv %>% 
+  mutate(dataframes = map(.x=paths, ~quo(read_csv(.x, col_types = cols())))) %>% 
+  mutate(nrows_and_ncols = map(dataframes, my_func))
+
+df_csv %>% head()
+```
+
+最後にtribbleをunnestして分解してあげる。
+
+```{r}
+df_csv %>% 
+  unnest(cols = nrows_and_ncols) %>% 
+  head() %>% knitr::kable()
+```
+
+# 参考
+
+- [ブログ記事](https://www.brodrigues.co/blog/2021-03-19-no_loops_tidyeval/)
+- [Advanced R](https://adv-r.hadley.nz/evaluation.html)
