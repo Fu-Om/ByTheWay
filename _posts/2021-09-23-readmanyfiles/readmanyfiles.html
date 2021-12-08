@@ -56,7 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
 code span.cf { color: #007ba5; } /* ControlFlow */
@@ -77,13 +77,14 @@ code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
 code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
 code span.st { color: #20794d; } /* String */
 code span.va { color: #111111; } /* Variable */
 code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
+
 
   <!--radix_placeholder_meta_tags-->
   <title>多くのファイルを遅延評価で読み込み、メモリ消費を抑える</title>
@@ -111,7 +112,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","categories","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["多くのファイルを遅延評価で読み込み、メモリ消費を抑える"]},{"type":"character","attributes":{},"value":["R","tidyyverse"]},{"type":"character","attributes":{},"value":["quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["fuuuumin"]},{"type":"character","attributes":{},"value":["https://fu-om.github.io/ByTheWay/"]}]}]},{"type":"character","attributes":{},"value":["09-23-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","categories","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["多くのファイルを遅延評価で読み込み、メモリ消費を抑える"]},{"type":"character","attributes":{},"value":["R","tidyverse"]},{"type":"character","attributes":{},"value":["quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["fuuuumin"]},{"type":"character","attributes":{},"value":["https://fu-om.github.io/ByTheWay/"]}]}]},{"type":"character","attributes":{},"value":["09-23-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1263,7 +1264,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
         window.tippy(this, {
           allowHTML: true,
           content: refHtml,
@@ -1455,7 +1459,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"多くのファイルを遅延評価で読み込み、メモリ消費を抑える","description":"quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。","authors":[{"author":"fuuuumin","authorURL":"https://fu-om.github.io/ByTheWay/","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-09-23T00:00:00.000+09:00","citationText":"fuuuumin, 2021"}
+{"title":"多くのファイルを遅延評価で読み込み、メモリ消費を抑える","description":"quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。","authors":[{"author":"fuuuumin","authorURL":"https://fu-om.github.io/ByTheWay/","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-09-23T00:00:00.000+00:00","citationText":"fuuuumin, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1469,7 +1473,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
 <div class="dt=tag">R</div>
-<div class="dt=tag">tidyyverse</div>
+<div class="dt=tag">tidyverse</div>
 </div>
 <!--/radix_placeholder_categories-->
 <p><p>quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。</p></p>
@@ -1493,7 +1497,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2021</span><span class='op'>)</span>
 <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>100</span>
 <span class='va'>nr</span> <span class='op'>&lt;-</span> <span class='fl'>100</span>; <span class='va'>nc</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
-<span class='va'>f</span> <span class='op'>=</span> <span class='fu'>map_chr</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span>, <span class='op'>~</span><span class='fu'>str_c</span><span class='op'>(</span><span class='st'>"./data/"</span>, <span class='va'>.x</span>, <span class='st'>".csv"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>f</span> <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_chr</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span>, <span class='op'>~</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='st'>"./data/"</span>, <span class='va'>.x</span>, <span class='st'>".csv"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.exists</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"./data"</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"./data"</span><span class='op'>)</span><span class='op'>)</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1501,17 +1505,17 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>create_random_df</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>nr</span>, <span class='va'>nc</span>, <span class='va'>path</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>nr</span><span class='op'>*</span><span class='va'>nc</span><span class='op'>)</span>, <span class='va'>nr</span>, <span class='va'>nc</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'>map_chr</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>nc</span>, <span class='op'>~</span><span class='fu'>str_c</span><span class='op'>(</span><span class='st'>"col_"</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span>
-  <span class='fu'>write_csv</span><span class='op'>(</span><span class='va'>df</span>, file <span class='op'>=</span> <span class='va'>path</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_chr</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>nc</span>, <span class='op'>~</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='st'>"col_"</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span>
+  <span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>df</span>, file <span class='op'>=</span> <span class='va'>path</span><span class='op'>)</span>
 <span class='op'>}</span>
-<span class='fu'>walk</span><span class='op'>(</span><span class='va'>f</span>, <span class='op'>~</span><span class='fu'>create_random_df</span><span class='op'>(</span><span class='va'>nr</span>, <span class='va'>nc</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>walk</a></span><span class='op'>(</span><span class='va'>f</span>, <span class='op'>~</span><span class='fu'>create_random_df</span><span class='op'>(</span><span class='va'>nr</span>, <span class='va'>nc</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"data/1.csv"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/1.csv"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table style="width:100%;">
@@ -1622,10 +1626,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>list_csv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"data"</span>, 
                        pattern <span class='op'>=</span> <span class='st'>".csv"</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='fu'>tribble</span><span class='op'>(</span><span class='op'>~</span><span class='va'>paths</span>, <span class='va'>list_csv</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>unnest</span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>paths</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>paths</span>, <span class='va'>list_csv</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>paths</span><span class='op'>)</span>
 
-<span class='va'>df_csv</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table>
@@ -1660,14 +1664,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>まず、dataframes列で<code>read_csv</code>をquosureにして評価しない。さらに、各dataframeに行う処理(今回の場合は<code>nrow()</code>)をquosureとしている。その後、nrows列を<code>rlang::eval_tidy</code>で評価している。</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='va'>df_csv</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>dataframes<span class='op'>=</span><span class='fu'>map</span><span class='op'>(</span>.x<span class='op'>=</span><span class='va'>paths</span>, <span class='op'>~</span><span class='fu'>quo</span><span class='op'>(</span><span class='fu'>read_csv</span><span class='op'>(</span><span class='va'>.x</span>, col_types <span class='op'>=</span> <span class='fu'>cols</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>nrows<span class='op'>=</span><span class='fu'>map</span><span class='op'>(</span>.x<span class='op'>=</span><span class='va'>dataframes</span>, <span class='op'>~</span><span class='fu'>quo</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>dataframes<span class='op'>=</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span>.x<span class='op'>=</span><span class='va'>paths</span>, <span class='op'>~</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/tidyeval.html'>quo</a></span><span class='op'>(</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='va'>.x</span>, col_types <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/cols.html'>cols</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>nrows<span class='op'>=</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span>.x<span class='op'>=</span><span class='va'>dataframes</span>, <span class='op'>~</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/tidyeval.html'>quo</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='va'>df_csv</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>nrows_eval <span class='op'>=</span> <span class='fu'>map</span><span class='op'>(</span><span class='va'>nrows</span>, <span class='fu'>rlang</span><span class='fu'>::</span><span class='va'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>unnest</span><span class='op'>(</span><span class='va'>nrows_eval</span><span class='op'>)</span>
-<span class='va'>df_csv</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>nrows_eval <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>nrows</span>, <span class='fu'>rlang</span><span class='fu'>::</span><span class='va'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>nrows_eval</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table>
@@ -1731,22 +1735,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>list_csv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"data"</span>, 
                        pattern <span class='op'>=</span> <span class='st'>".csv"</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='fu'>tribble</span><span class='op'>(</span><span class='op'>~</span><span class='va'>paths</span>, <span class='va'>list_csv</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>unnest</span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>paths</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>paths</span>, <span class='va'>list_csv</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>paths</span><span class='op'>)</span>
 <span class='va'>my_func</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-  <span class='fu'>tribble</span><span class='op'>(</span><span class='op'>~</span><span class='va'>nrows</span>, <span class='op'>~</span><span class='va'>ncols</span>,
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>nrows</span>, <span class='op'>~</span><span class='va'>ncols</span>,
           <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 
-<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='va'>df_csv</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>dataframes <span class='op'>=</span> <span class='fu'>map</span><span class='op'>(</span>.x<span class='op'>=</span><span class='va'>paths</span>, <span class='op'>~</span><span class='fu'>quo</span><span class='op'>(</span><span class='fu'>read_csv</span><span class='op'>(</span><span class='va'>.x</span>, col_types <span class='op'>=</span> <span class='fu'>cols</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>nrows_and_ncols <span class='op'>=</span> <span class='fu'>map</span><span class='op'>(</span><span class='va'>dataframes</span>, <span class='va'>my_func</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'>&lt;-</span> <span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>dataframes <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span>.x<span class='op'>=</span><span class='va'>paths</span>, <span class='op'>~</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/tidyeval.html'>quo</a></span><span class='op'>(</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='va'>.x</span>, col_types <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/cols.html'>cols</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>nrows_and_ncols <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>dataframes</span>, <span class='va'>my_func</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>df_csv</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 6 x 3
+<pre><code># A tibble: 6 × 3
   paths        dataframes nrows_and_ncols 
   &lt;chr&gt;        &lt;list&gt;     &lt;list&gt;          
 1 data/1.csv   &lt;quosure&gt;  &lt;tibble [1 × 2]&gt;
@@ -1759,9 +1763,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>最後にtribbleをunnestして分解してあげる。</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_csv</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>unnest</span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>nrows_and_ncols</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_csv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>nrows_and_ncols</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table>

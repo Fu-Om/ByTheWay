@@ -2,7 +2,7 @@
 title: "多くのファイルを遅延評価で読み込み、メモリ消費を抑える" 
 categories:
   - R
-  - tidyyverse
+  - tidyverse
 description: |
   quosureを用いると計算が必要なときに読み込まれて、メモリ消費を抑えられる。
 author:
