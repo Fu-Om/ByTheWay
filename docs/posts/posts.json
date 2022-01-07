@@ -1,5 +1,25 @@
 [
   {
+    "path": "posts/2022-01-07-hdrinmultinorm/",
+    "title": "多変量正規分布のHighest Density Regionを調べる",
+    "description": "Finding highest density region given a multidimensional normaldistribution.",
+    "author": [
+      {
+        "name": "fuuuumin",
+        "url": "https://fu-om.github.io/ByTheWay/"
+      }
+    ],
+    "date": "2022-01-08",
+    "categories": [
+      "R",
+      "statistics"
+    ],
+    "contents": "\n多変量正規分布の復習\n\\(x\\)がK変量正規分布に従い、平均ベクトルを\\(\\mu\\)、共分散行列を\\(\\Sigma\\)とおくと、\\(y\\)の同時確率密度関数は以下のように表される。参考記事\n\\[MultiNormal(x|\\mu,\\Sigma) = \\frac{1}{\\left( 2 \\pi \\right)^{K/2}} \\frac{1}{\\sqrt{|\\Sigma|}} \\exp \\! \\left( \\! - \\frac{1}{2} (x - \\mu)^{\\top} \\, \\Sigma^{-1} \\, (x - \\mu) \\right)\\]\n例のため、\\(\\mu = \\textbf{0}\\), \\(\\Sigma = \\left[\\begin{matrix} 5 & 4 \\\\ 4 & 5 \\end{matrix}\\right]\\) とする。\n可視化してみると、\n\n\nlibrary(tidyverse)\nSigma <- matrix(c(5, 4, 4, 5), nrow=2)\ndf <- MASS::mvrnorm(n=1000, mu=c(0, 0), Sigma=Sigma) %>% as_tibble()\nggplot(df, aes(V1, V2)) + \n  geom_point() +\n  coord_fixed() +\n  scale_x_continuous(breaks = seq(-10, 10, 5)) +\n  scale_y_continuous(breaks = seq(-10, 10, 5)) -> p\np\n\n\n\n\n共分散行列の固有値、固有ベクトルを求める。\n\n\neigen(Sigma)\n\n\neigen() decomposition\n$values\n[1] 9 1\n\n$vectors\n          [,1]       [,2]\n[1,] 0.7071068 -0.7071068\n[2,] 0.7071068  0.7071068\n\n固有値: \\(\\lambda = 9, 1\\)\n固有ベクトル: (0.7071068, 0.7071068), (-0.7071068, 0.7071068)\n固有ベクトルはノルムが1に正規化されている。\n固有ベクトルが軸の方向、固有値が楕円の大きさを示している。\nHDRの可視化\nHDRについてはここを参照。\nサンプルから推定された80%, 95% HDR (red, blue).\n共分散行列から計算される95% HDR (skyblue). ここを参考にした。\n\n\nc95 <- qchisq(.95, df=2)\nellips <- function(center = c(0,0), conf=c95, cov_mat, npoints = 100){\n  t <- seq(0, 2*pi, len=npoints)\n  #Sigma <- matrix(c(1, rho, rho, 1), 2, 2)\n  Sigma <- cov_mat\n  a <- sqrt(conf*eigen(Sigma)$values[2])\n  b <- sqrt(conf*eigen(Sigma)$values[1])\n  x <- center[1] + a*cos(t)\n  y <- center[2] + b*sin(t)\n  X <- cbind(x, y)\n  R <- eigen(Sigma)$vectors\n  data.frame(X%*%R)\n}\ndat <- ellips(center=c(0, 0), cov_mat=Sigma, c=c95, npoints=100)\np +\n  stat_ellipse(type = \"norm\", level = 0.8, color = \"blue\") + \n  stat_ellipse(type = \"norm\", level = 0.95, color = \"red\") + \n  geom_path(data=dat, aes(x=X1, y=X2), colour='skyblue')\n\n\n\n\nHDRに含まれるか判定\nあるK変量正規分布に従う点 \\(\\textbf{x}\\)がHDRに含まれるかはMahalanobis距離、すなわち\n\\[(x - \\mu)^{\\top} \\, \\Sigma^{-1} \\, (x - \\mu) \\leq \\chi^{2}_{0.95}(K) \\] で判定できる。\n\n\ndf <- df %>% \n  bind_cols(d = mahalanobis(df, center = c(0, 0), cov = Sigma)) %>% \n  mutate(flag = if_else(d < c95, TRUE, FALSE))\nggplot(df, aes(V1, V2, color=flag)) + \n  geom_point() +\n  coord_fixed() +\n  scale_x_continuous(breaks = seq(-10, 10, 5)) +\n  scale_y_continuous(breaks = seq(-10, 10, 5)) +\n  geom_path(data=dat, aes(x=X1, y=X2), colour='skyblue')\n\n\n\n\nその他参考\n多変量正規分布\n2次元のHDR\n多次元のHDR\n\n\n\n",
+    "preview": "posts/2022-01-07-hdrinmultinorm/hdrinmultinorm_files/figure-html5/unnamed-chunk-1-1.png",
+    "last_modified": "2022-01-07T20:41:56+00:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2022-01-07-histogramgroupfrequency/",
     "title": "ggplotでグループ毎の頻度ヒストグラムを隣り合わせて作成",
     "description": "group histogram by ggplot",
