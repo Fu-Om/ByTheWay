@@ -20,7 +20,7 @@
     "input_file": {}
   },
   {
-    "path": "posts/2022-01-07-histogramgroupfrequency/",
+    "path": "posts/2022-01-08-histogramgroupfrequency/",
     "title": "ggplotでグループ毎の頻度ヒストグラムを隣り合わせて作成",
     "description": "group histogram by ggplot",
     "author": [
@@ -35,7 +35,7 @@
       "tidyverse"
     ],
     "contents": "\nタイトル通りにplotしようとしたら詰まったためメモ。\nサンプルデータ。\\(x1 \\sim Binom(20, 0.2)\\), \\(x2 \\sim Binom(20, 0.5)\\)\n\n\nlibrary(tidyverse)\nset.seed(123)\nn1 <- 200\nn2 <- n1 * 3\ndf <- tibble(type = c(rep(\"x1\", n1), rep(\"x2\", n2)), \n             value = c(abs(rbinom(n = n1, 20, 0.2)), abs(rbinom(n = n2, 20, 0.5))))\n\n\n\nGithubにissueが上がっていたが、そのままだとgroup毎の頻度がずれていた。結論としては、geom_histogramにbinwidthではなくbreaksを渡さないといけなかった。\nbreaksなし\n\n\nbw <- 2; min_val <- 0; max_val <- 20\nggplot(df, aes(x = value, y = stat(density*width), fill=type)) +\n  geom_histogram(binwidth = bw, position=position_dodge()) +\n  scale_x_continuous(breaks = seq(min_val, max_val, bw), limits = c(min_val, max_val), expand = c(0, 0))\n\n\n\n\nbreaksあり\n\n\nggplot(df, aes(x = value, y = stat(density*width), fill=type)) +\n  geom_histogram(breaks = seq(min_val, max_val, bw), position=position_dodge()) +\n  scale_x_continuous(breaks = seq(min_val, max_val, bw), limits = c(min_val, max_val), expand = c(0, 0))\n\n\n\n\n頻度表\n\n\ndf %>% \ngroup_by(type, ints = cut_width(value, width = 2, boundary = 0)) %>% \n  summarise(n = n()) %>% \n  mutate(freq = n / sum(n)) %>% \n  select(-n) %>% \n  pivot_wider(names_from = type, values_from = freq, values_fill = 0)\n\n\n# A tibble: 9 × 3\n  ints       x1      x2\n  <fct>   <dbl>   <dbl>\n1 [0,2]   0.155 0      \n2 (2,4]   0.485 0.005  \n3 (4,6]   0.285 0.055  \n4 (6,8]   0.07  0.195  \n5 (8,10]  0.005 0.345  \n6 (10,12] 0     0.275  \n7 (12,14] 0     0.103  \n8 (14,16] 0     0.02   \n9 (16,18] 0     0.00167\n\n\n\n\n",
-    "preview": "posts/2022-01-07-histogramgroupfrequency/histogramgroupfrequency_files/figure-html5/unnamed-chunk-2-1.png",
+    "preview": "posts/2022-01-08-histogramgroupfrequency/histogramgroupfrequency_files/figure-html5/unnamed-chunk-2-1.png",
     "last_modified": "2022-01-07T11:28:56+00:00",
     "input_file": {}
   },
