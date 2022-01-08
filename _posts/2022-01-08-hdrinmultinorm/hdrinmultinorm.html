@@ -1587,8 +1587,8 @@ $vectors
 <pre><code># A tibble: 2 × 3
   flag      n  freq
   &lt;lgl&gt; &lt;int&gt; &lt;dbl&gt;
-1 FALSE    53 0.053
-2 TRUE    947 0.947</code></pre>
+1 FALSE    48 0.048
+2 TRUE    952 0.952</code></pre>
 </div>
 <p><code>mahalanobis</code>のソース</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1607,7 +1607,7 @@ $vectors
         cov &lt;- solve(cov, ...)
     setNames(rowSums(x %*% cov * x), rownames(x))
 }
-&lt;bytecode: 0x5613a9a8e200&gt;
+&lt;bytecode: 0x555798789850&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 <h1 id="その他参考">その他参考</h1>
