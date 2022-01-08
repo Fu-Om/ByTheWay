@@ -1575,13 +1575,33 @@ $vectors
 </div>
 <p><img src="hdrinmultinorm_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
+<p><code>mahalanobis</code>のソース</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>stats</span><span class='fu'>:::</span><span class='va'><a href='https://rdrr.io/r/stats/mahalanobis.html'>mahalanobis</a></span>
+</code></pre>
+</div>
+<pre><code>function (x, center, cov, inverted = FALSE, ...) 
+{
+    x &lt;- if (is.vector(x)) 
+        matrix(x, ncol = length(x))
+    else as.matrix(x)
+    if (!isFALSE(center)) 
+        x &lt;- sweep(x, 2L, center)
+    if (!inverted) 
+        cov &lt;- solve(cov, ...)
+    setNames(rowSums(x %*% cov * x), rownames(x))
+}
+&lt;bytecode: 0x5613959de380&gt;
+&lt;environment: namespace:stats&gt;</code></pre>
+</div>
 <h1 id="その他参考">その他参考</h1>
 <ul>
 <li><p><a href="https://qiita.com/Seiji_Tanaka/items/5c8041dbd7da1510fbe9">多変量正規分布</a></p></li>
 <li><p><a href="https://stats.stackexchange.com/questions/64680/how-to-determine-quantiles-isolines-of-a-multivariate-normal-distribution">2次元のHDR</a></p></li>
 <li><p><a href="https://stats.stackexchange.com/questions/354063/computing-highest-density-region-given-multivariate-normal-distribution-with-dim">多次元のHDR</a></p></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
