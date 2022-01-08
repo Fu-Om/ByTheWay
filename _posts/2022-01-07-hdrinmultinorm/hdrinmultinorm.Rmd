@@ -102,6 +102,15 @@ ggplot(df, aes(V1, V2, color=flag)) +
   geom_path(data=dat, aes(x=X1, y=X2), colour='skyblue')
 ```
 
+95%含まれているか確認
+
+```{r}
+df %>% 
+  group_by(flag) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+```
+
 `mahalanobis`のソース
 
 ```{r}

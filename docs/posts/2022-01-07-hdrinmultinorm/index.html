@@ -2196,6 +2196,21 @@ $vectors
 </div>
 <p><img src="hdrinmultinorm_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
+<p>95%含まれているか確認</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>flag</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>freq <span class='op'>=</span> <span class='va'>n</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 2 × 3
+  flag      n  freq
+  &lt;lgl&gt; &lt;int&gt; &lt;dbl&gt;
+1 FALSE    53 0.053
+2 TRUE    947 0.947</code></pre>
+</div>
 <p><code>mahalanobis</code>のソース</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2213,7 +2228,7 @@ $vectors
         cov &lt;- solve(cov, ...)
     setNames(rowSums(x %*% cov * x), rownames(x))
 }
-&lt;bytecode: 0x5613959de380&gt;
+&lt;bytecode: 0x5613a9a8e200&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 <h1 id="その他参考">その他参考</h1>
@@ -2222,7 +2237,7 @@ $vectors
 <li><p><a href="https://stats.stackexchange.com/questions/64680/how-to-determine-quantiles-isolines-of-a-multivariate-normal-distribution">2次元のHDR</a></p></li>
 <li><p><a href="https://stats.stackexchange.com/questions/354063/computing-highest-density-region-given-multivariate-normal-distribution-with-dim">多次元のHDR</a></p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
